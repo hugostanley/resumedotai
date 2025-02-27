@@ -1,6 +1,10 @@
+import dotenv from "dotenv";
+
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
-import { User, ApiResponse } from "shared";
+import { createClient } from "./lib/supabase";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -8,22 +12,16 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Sample data
-const users: User[] = [
-  { id: "1", name: "John Doe", email: "john@example.com" },
-  { id: "2", name: "Jane Smith", email: "jane@example.com" },
-];
+app.get("/api/todos", async (req, res) => {
+  const supabase = createClient({ req, res });
 
-app.get("/api/users", (req, res) => {
-  const response: ApiResponse<User[]> = {
-    data: users,
-    status: 200,
-    message: "Users fetched successfully",
-  };
+  const { data, error } = await supabase.from("todos").select();
+  console.log(data, error);
 
-  res.json(response);
+  res.json(data);
 });
 
 app.listen(PORT, () => {
+  console.log(process.env.SUPABASE_URL);
   console.log(`Server running on port ${PORT}`);
 });

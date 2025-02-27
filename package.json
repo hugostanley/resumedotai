@@ -12,8 +12,9 @@
     "build:server": "pnpm --filter server build",
     "build": "pnpm build:client && pnpm build:server"
   },
-   "devDependencies": {
+  "devDependencies": {
     "concurrently": "^8.2.0",
+    "supabase": ">=1.8.1",
     "typescript": "^5.0.0"
   },
   "keywords": [],

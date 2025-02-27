@@ -1,3 +1,5 @@
+export * as DatabaseTypes from "./database.types";
+
 export interface User {
   id: string;
   name: string;
@@ -9,3 +11,5 @@ export interface ApiResponse<T> {
   status: number;
   message: string;
 }
+
+export const myName = "stanley";
